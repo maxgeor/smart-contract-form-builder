@@ -1,0 +1,11 @@
+export default function humanizeType(type) {
+  const humanTypes = {
+    'uint256': 'number',
+    'bool': 'checkbox',
+    'string': 'text',
+    'address': 'address',
+
+  }
+  
+  // return types.join(' | ');
+}
