@@ -91,7 +91,7 @@ export default function New() {
               <span>3</span>
             </div>
             <h2 className='font-lora  text-2xl mb-4'>First, what contract are you using to make this form?</h2>
-            <p className='font-lora text-gray-500 mb-6'>Pop in a contract's address from <Link href={'https://etherscan.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Etherscan</span></Link>.</p>
+            <p className='font-lora text-gray-500 mb-6'>Pop in a contract&apos;s address from <Link href={'https://etherscan.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Etherscan</span></Link>.</p>
             <div className='flex'>
               <label className='flex flex-col items-start w-full' htmlFor='address'>
                 <input ref={address} 
