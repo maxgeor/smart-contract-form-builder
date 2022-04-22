@@ -177,7 +177,7 @@ export default function New() {
               <div className=''>
                 <h2 className='text-2xl mb-4'>Connect your wallet</h2>
                 <p className='font-lora text-gray-500'>You need an Ethereum wallet to submit this form.</p>
-                <p className='font-lora text-gray-500 mb-6'>Don't have one? Use <Link href={'https://metamask.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Metamask</span></Link>.</p>
+                <p className='font-lora text-gray-500 mb-6'>Don&apos;t have one? Use <Link href={'https://metamask.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Metamask</span></Link>.</p>
                 <div className='mb-6 flex items-center space-x-2'>
                   <div className='flex items-center space-x-1.5 text-blue-500'>
                     <Check />

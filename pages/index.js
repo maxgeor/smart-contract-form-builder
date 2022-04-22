@@ -32,11 +32,11 @@ export default function Home() {
           </div>
         </div>
         <h2 className='font-lora text-2xl text-center mb-6'>Mint from Etherscan? No thanks.</h2>
-        <article className='space-y-4'>
+        {/* <article className='space-y-4'>
           <p>Have you seen it before? It's disgusting — look:</p>
           <p>It's an abomanation, a total trainwreak of an experinece.</p>
           <p>WTF's a <code>uint256</code>?.</p>
-        </article>
+        </article> */}
       </main>
     </div>
   )
