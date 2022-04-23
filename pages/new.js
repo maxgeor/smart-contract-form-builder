@@ -74,7 +74,7 @@ export default function New() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className='font-karla flex flex-col items-center max-w-md mx-auto mt-16 md:mt-24 mb-36 md:mb-48'>
+      <main className='font-karla flex flex-col items-center max-w-lg mx-auto mt-16 md:mt-24 mb-36 md:mb-48'>
         <div className='relative mb-16 md:mb-24 mx-8'>
           <Link href="/">
             <div className='cursor-pointer md:absolute md:-left-20 md:top-0.5 flex justify-center items-center h-9 w-8 p-1 rounded-md bg-blue-500 mb-8'>
@@ -131,7 +131,7 @@ export default function New() {
                 <li className='pl-2'>Turn it&apos;s <span className='font-karla'>inputs</span> into form fields</li>
                 <li className="pl-2 before:content['-']">Call the method when the form submits</li>
               </ol>
-              <p className='font-lora text-gray-500 mb-6 text-xs'>Psst: You can&apos;t use methods that <i>return data</i>, so you won&apos;t find them here.</p>
+              <p className='font-lora text-gray-500 mb-6 text-xs'>You can&apos;t use methods that <i>return data</i>, so you won&apos;t find those ones here.</p>
             </div>
             <div className='divide-y border rounded-lg -mx-4 sm:mx-0'>
               {methods?.map(method => 
