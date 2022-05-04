@@ -6,40 +6,34 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = ":./dev.db"
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-// model User {
-//   id          String    @id @default(cuid())
-//   name        String
-//   email       String
-//   password    String
-//   type        String
-//   forms       Form[]
-//   createdAt   DateTime  @default(now())
-// }
-
 model Form {
-  id          String    @id @default(cuid())
-  address     String
-  contract    String
-  method      String
-  title       String
-  description String
-  fields      Field[]
-  // creator     User      @relation(fields: [userId], references: [id])
-  // userId      String
-  createdAt   DateTime
-  updatedAt   DateTime
+  id           String    @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+
+  address      String
+  contractName String
+  method       String    
+  fields       Field[]
+
+  title        String?
+  description  String?
+  
 }
 
 model Field {
   id          String    @id @default(cuid())
   form        Form      @relation(fields: [formId], references: [id])
   formId      String
-  type        String
+
   name        String
-  title       String
-  description String
+  type        String
+
+  title       String?
+  description String?
 }
