@@ -10,11 +10,11 @@ import {
   useAddress,
   useDisconnect,
 } from '@thirdweb-dev/react';
-import ConnectWalletDropdown from './ConnectWalletList'
+import ConnectWalletModal from './ConnectWalletModal'
 
 export default function ConnectWalletField({
-  showingWalletList,
-  setShowingWalletList,
+  showingWalletModal,
+  setShowingWalletModal,
 }) {
   const connectWithMetamask = useMetamask();
   const connectWithWalletConnect = useWalletConnect();
@@ -39,7 +39,7 @@ export default function ConnectWalletField({
 
   // const accountChangedHandler = account => setAccount(account);
 
-  const toggleWalletList = () => setShowingWalletList(!showingWalletList);
+  const toggleWalletModal = () => setShowingWalletModal(!showingWalletModal);
 
   return (
     <div className='p-8 w-full max-w-lg mx-auto rounded-lg'>
@@ -55,16 +55,16 @@ export default function ConnectWalletField({
           <p className='font-medium font-karla'>Connected to <span className='font-semibold'>{shortenAddress(address)}</span></p>
         </div>
         <button className='flex font-karla text-gray-500 text-xs cursor-pointer'>
-        <button onClick={toggleWalletList} className='hover:underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Change</button></button>
+        <button onClick={toggleWalletModal} className='hover:underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Change</button></button>
       </div>
       ) : (
-      <button onClick={toggleWalletList} className="font-karla flex items-center cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 pl-4 pr-2.5 rounded-lg font-medium text-white">
+      <button onClick={toggleWalletModal} className="font-karla flex items-center cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 pl-4 pr-2.5 rounded-lg font-medium text-white">
         <span>Connect wallet</span>
-        <ChevronDownIcon className={`transform ${!showingWalletList && '-rotate-90'} transition duration-200 ease-out h-5 w-5 ml-1.5 text-blue-100`} />
+        <ChevronDownIcon className={`transform ${!showingWalletModal && '-rotate-90'} transition duration-200 ease-out h-5 w-5 ml-1.5 text-blue-100`} />
       </button>
       )}
-      <ConnectWalletDropdown 
-        classes={`${!showingWalletList && 'hidden'} w-[calc(100% - 16rem)] translate flex flex-col items-start absolute z-10 bg-white rounded-lg  shadow-md left-8 top-52 overflow-auto`}
+      <ConnectWalletModal 
+        classes={`${!showingWalletModal && 'hidden'} w-[calc(100% - 16rem)] translate flex flex-col items-start absolute z-10 bg-white rounded-lg  shadow-md left-8 top-52 overflow-auto`}
         connectWithMetamask={connectWithMetamask}
         connectWithWalletConnect={connectWithWalletConnect}
         connectWithCoinbaseWallet={connectWithCoinbaseWallet}

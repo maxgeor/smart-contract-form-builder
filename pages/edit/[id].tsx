@@ -17,7 +17,7 @@ export default function Edit({ form, fields }) {
   const address = createRef();
   const [contract, setContract] = useState({});
   const [errors, setErrors] = useState({});
-  const [showingWalletList, setShowingWalletList] = useState(false);
+  const [showingWalletModal, setShowingWalletModal] = useState(false);
 
   const [focusedField, setFocusedField] = useState(null);
 
@@ -124,23 +124,16 @@ export default function Edit({ form, fields }) {
               </div>
             </div>
           </div> */}
-          <ConnectWalletField showingWalletList={showingWalletList} setShowingWalletList={setShowingWalletList}/>
+          <ConnectWalletField showingWalletModal={showingWalletModal} setShowingWalletModal={setShowingWalletModal}/>
           <div className='mx-0'>
-            <div className='relative p-8 max-w-lg mx-auto sm:rounded-lg ring-1 ring-blue-100 bg-blue-50'>
-              <div className=''>
-                <p className='font-lora text-gray-500 mb-4'><i>Anyone</i> can make a form for this contract — make sure you trust it.</p>
-                <div className='flex items-center space-x-3'>
-                  <input name="confirmaton"
-                        type='checkbox'
-                        className={`rounded-lg transition duration-200 hover:text-gray-800 focus:text-gray-800 border hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate`} 
-                  />
-                  <label htmlFor='confirmation'>I trust this form</label>
-                </div>
-                {/* {errors && (
-                  <div className='mt-2'>
-                  <p className='text-sm text-red-600'>{errors}</p>
-                </div>
-                )} */}
+            <div className='relative p-8 max-w-lg mx-auto sm:rounded-lg ring-1 ring-blue-100 bg-blue-50/80'>
+              <p className='font-lora text-gray-500 mb-4'><i>Anyone</i> can make a form for this contract — make sure you trust it.</p>
+              <div className='flex items-center space-x-3'>
+                <input name="confirmaton"
+                      type='checkbox'
+                      className={`rounded-lg transition duration-200 hover:text-gray-800 focus:text-gray-800 border hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate`} 
+                />
+                <label htmlFor='confirmation'>I trust this form</label>
               </div>
             </div>
           </div>

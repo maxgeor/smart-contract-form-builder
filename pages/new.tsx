@@ -16,6 +16,7 @@ export default function New() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [errors, setErrors] = useState({});
+  const [showingTags, setShowingTags] = useState(true);
   const [showingEtherscanLogo, setShowingEtherscanLogo] = useState(false);
 
   const Router = useRouter();
@@ -42,6 +43,7 @@ export default function New() {
       return setErrors({ address: "Hmm, that doesn't look like an address. Try copy & pasting it again." });
     }
     setIsLoading(true);
+    setShowingTags(false);
     try {
       const data = await fetch(`https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${address.current.value}&apikey=${process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY}`);
       const json = await data.json();
@@ -125,13 +127,18 @@ export default function New() {
             </div>
             <h2 className='font-lora  text-2xl mb-4'>What contract are you making a form for?</h2>
             <p className='font-lora text-gray-500 mb-6'>Pop in the address of a verified contract from <Link href={'https://etherscan.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Etherscan</span></Link>.</p>
-            <label className='flex flex-col items-start w-full' htmlFor='address'>
+            <label className='relative z-10 flex flex-col items-start w-full' htmlFor='address'>
               <input ref={address} 
-                      autoFocus
-                      placeholder='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7'
-                      className={`${contractName === undefined ? 'rounded-lg' : 'rounded-t-lg text-gray-400'} transition duration-200 hover:text-gray-800 focus:text-gray-800 border ${errors.address && 'border-red-400'} border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate py-2 px-4 md:pr-8  w-full`} 
+                     autoFocus
+                     placeholder='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7'
+                     className={`${contractName === undefined ? 'rounded-lg' : 'rounded-t-lg text-gray-400'} transition duration-200 hover:text-gray-500 focus:text-gray-800 border ${errors.address && 'border-red-400'} border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate py-2 px-4 md:pr-8  w-full`} 
+                     onFocus={() => setShowingTags(true)}
+                     onBlur={() => {
+                       console.log(contract);
+                       if (contract === {}) setShowingTags(false)
+                      }}
               />
-              <div className={`${contractName === undefined ? 'hidden' : ' flex'} items-center space-x-1.5 font-lora border border-t-0 border-gray-200 rounded-b-lg p-4 w-full mr-10`}>
+              <div className={`${contractName === undefined ? '-mt-[3.75rem] opacity-0 pointer-events-none' : ' flex'} transition duration-300 h-[3.75rem] box-border items-center space-x-1.5 font-lora border border-t-0 border-gray-200 rounded-b-lg p-4 w-full mr-10`}>
                 <h3 className='font-lora text-lg break-words'>{contractName}</h3>
                 <Link href={'https://etherscan.io/'}>
                   <a target='_blank' className={`${showingEtherscanLogo ? 'opacity-100 flex' : 'opacity-0'} transition duration-200 justify-center items-center h-5 w-5 hover:bg-gray-200 rounded-full`}>
@@ -141,24 +148,24 @@ export default function New() {
               </div>
               <span className={`${isLoading ? 'inline-block' : 'hidden'} leading-7 tracking-widest text-2xl text-gray-400 ml-4 mt-2`}>...</span>
             </label>
-            {!contract || !isLoading &&  (
-              <div className='mt-3 mb-6'>
-                <div className='flex space-x-2'>
-                  <button onClick={e => handleTagClick(e)} data-address='0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
-                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
-                    <span className='pointer-events-none'>Uniswap</span>
-                  </button>
-                  <button onClick={e => handleTagClick(e)} data-address='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
-                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
-                    <span className='pointer-events-none'>Loot</span>
-                  </button>
-                  <button onClick={e => handleTagClick(e)} data-address='0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
-                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
-                    <span className='pointer-events-none'>ENS</span>
-                  </button>
-                </div>
+            {/* {!contract || !isLoading &&  ( */}
+            <div className={`${showingTags ? 'opacity-100' : '-translate-y-4 -mt-7 opacity-0 pointer-events-none'} transition duration-300 transform mt-3 mb-6`}>
+              <div className='flex space-x-2 z-0 '>
+                <button onClick={e => handleTagClick(e)} data-address='0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                  <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                  <span className='pointer-events-none'>Uniswap</span>
+                </button>
+                <button onClick={e => handleTagClick(e)} data-address='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                  <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                  <span className='pointer-events-none'>Loot</span>
+                </button>
+                <button onClick={e => handleTagClick(e)} data-address='0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                  <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                  <span className='pointer-events-none'>ENS</span>
+                </button>
               </div>
-            )}
+            </div>
+            {/* )} */}
             {errors.address && (
               <div className='mt-2'>
                 <p className='text-sm text-red-600 mt-2'>{errors.address}</p>
@@ -184,23 +191,22 @@ export default function New() {
             </div>
             <div className='divide-y border rounded-lg -mx-4 sm:mx-0 mb-4'>
               {methods?.map(method => 
-              <label className={`transform active:scale-[99%] ease-out p-4 flex sm:items-center justify-between w-full transition duration-150  ${selectedMethod?.signature === method.signature && 'bg-blue-500 text-white'} hover:ring-2 hover:ring-inset hover:ring-blue-500 first:rounded-t-lg last:rounded-b-lg`} key={method.signature} htmlFor={method.signature}>
-                <div className={`flex flex-col w-full ${method.inputs.length > 0 && 'space-y-2'}`}>
+              <label className={`relative transform active:scale-[99%] ease-out p-4 flex sm:items-center justify-between w-full transition duration-150  ${selectedMethod?.signature === method.signature && 'bg-blue-500 text-white'} hover:ring-2 hover:ring-inset hover:ring-blue-500 first:rounded-t-lg last:rounded-b-lg`} key={method.signature} htmlFor={method.signature}>
+                <input type='radio' 
+                       name='method' 
+                       className='peer hidden self-start h-7' 
+                       onChange={(e) => handleCheck(e, method)} id={method.signature} />
+                <span className='absolute top-[1.4375rem] left-4 h-[14px] w-[14px] rounded-full box-border border border-gray-400 peer-checked:border-2 peer-checked:border-white' />
+                <div className={`ml-[1.875rem] flex flex-col w-full ${method.inputs.length > 0 && 'space-y-2'}`}>
                   <div className='flex space-x-4'>
-                    <input className='self-start h-7' onChange={(e) => handleCheck(e, method)} id={method.signature} type='radio' name='method' />
+                    
                     <div className='flex items-center justify-between w-full'>
                       <h3 className={`font-lora mr-12 md:mr-16 text-lg break-all ${selectedMethod?.signature === method.signature && 'text-white'}`}>{method.name}</h3>
                       <p className={`flex-shrink-0 self-start leading-7 text-xs ${selectedMethod?.signature === method.signature ? 'text-blue-200' : 'text-gray-400'}`}>{method.inputs.length} field{method.inputs.length !== 1 && 's'}</p>
                     </div>
                   </div>
                   {method.inputs && (
-                    <table className='ml-[29px]' cellPadding={0} cellSpacing={0}>
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
+                    <table cellPadding={0} cellSpacing={0}>
                       <tbody>
                         {method.inputs.map(input => 
                         <tr key={input.name} className="flex justify-between items-baseline ">
@@ -210,8 +216,7 @@ export default function New() {
                           <td className={`ml-2 text-xs flex-shrink-0 ${selectedMethod?.signature === method.signature ? 'text-blue-200' : 'text-gray-400'}`}>
                             {input.type}
                           </td>
-                        </tr>
-                        )}
+                        </tr>)}
                       </tbody>
                     </table>
                   )}
@@ -221,7 +226,7 @@ export default function New() {
             </div>
           </div>)}
           <div className={`${!selectedMethod && 'hidden'} mt-4 w-full bg-white sticky py-4 bottom-0`}>
-            <button onClick={handleSubmit} disabled={selectedMethod ? false : true} className={`${!selectedMethod && 'grayscale'} flex items-center font-karla cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white`}>
+            <button onClick={handleSubmit} disabled={selectedMethod ? false : true} className={`${!selectedMethod && 'grayscale'} flex items-center font-karla h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white`}>
               <p className='mr-1.5'>Create your form</p>
               <ArrowSmRightIcon className='h-5 w-5' />
             </button>
