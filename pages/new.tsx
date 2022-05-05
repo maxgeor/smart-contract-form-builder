@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import { useState, useEffect, createRef, useRef } from 'react'
-import ArrowRight from '../icons/ArrowRight';
+import { ArrowSmRightIcon, DocumentDuplicateIcon } from '@heroicons/react/solid'
 
 import Web3 from 'web3';
 const web3 = new Web3(new Web3.providers.HttpProvider() || 'http://localhost:3000');
@@ -93,6 +93,12 @@ export default function New() {
     }
   };
 
+  const handleTagClick = (e) => {
+    e.preventDefault();
+    address.current.value = e.target.dataset.address;
+    getContract();
+  }
+
   return (
     <div className='min-h-screen'>
       <Head>
@@ -119,29 +125,46 @@ export default function New() {
             </div>
             <h2 className='font-lora  text-2xl mb-4'>What contract are you making a form for?</h2>
             <p className='font-lora text-gray-500 mb-6'>Pop in the address of a verified contract from <Link href={'https://etherscan.io/'} target={'_blank'}><span className='underline decoration-1 underline-offset-4 decoration-gray-300 hover:decoration-gray-500 cursor-pointer transition duration-200'>Etherscan</span></Link>.</p>
-            <div className='flex'>
-              <label className='flex flex-col items-start w-full' htmlFor='address'>
-                <input ref={address} 
-                       autoFocus
-                       placeholder='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7'
-                       className={`${contractName === undefined ? 'rounded-lg' : 'rounded-t-lg text-gray-400'} transition duration-200 hover:text-gray-800 focus:text-gray-800 border ${errors.address && 'border-red-400'} border-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate py-2 px-4 md:pr-8  w-full`} 
-                />
-                <div className={`${contractName === undefined ? 'hidden' : ' flex'} items-center space-x-1.5 font-lora border border-t-0 border-gray-200 rounded-b-lg p-4 w-full mr-10`}>
-                  <h3 className='font-lora text-lg break-words'>{contractName}</h3>
-                  <Link href={'https://etherscan.io/'}>
-                    <a target='_blank' className={`${showingEtherscanLogo ? 'opacity-100 flex' : 'opacity-0'} transition duration-200 justify-center items-center h-5 w-5 hover:bg-gray-200 rounded-full`}>
-                      <Image src='/etherscan-logo-circle.svg' width={12} height={12} />
-                    </a>
-                  </Link>
+            <label className='flex flex-col items-start w-full' htmlFor='address'>
+              <input ref={address} 
+                      autoFocus
+                      placeholder='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7'
+                      className={`${contractName === undefined ? 'rounded-lg' : 'rounded-t-lg text-gray-400'} transition duration-200 hover:text-gray-800 focus:text-gray-800 border ${errors.address && 'border-red-400'} border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate py-2 px-4 md:pr-8  w-full`} 
+              />
+              <div className={`${contractName === undefined ? 'hidden' : ' flex'} items-center space-x-1.5 font-lora border border-t-0 border-gray-200 rounded-b-lg p-4 w-full mr-10`}>
+                <h3 className='font-lora text-lg break-words'>{contractName}</h3>
+                <Link href={'https://etherscan.io/'}>
+                  <a target='_blank' className={`${showingEtherscanLogo ? 'opacity-100 flex' : 'opacity-0'} transition duration-200 justify-center items-center h-5 w-5 hover:bg-gray-200 rounded-full`}>
+                    <Image src='/etherscan-logo-circle.svg' width={12} height={12} />
+                  </a>
+                </Link>
+              </div>
+              <span className={`${isLoading ? 'inline-block' : 'hidden'} leading-7 tracking-widest text-2xl text-gray-400 ml-4 mt-2`}>...</span>
+            </label>
+            {!contract || !isLoading &&  (
+              <div className='mt-3 mb-6'>
+                <div className='flex space-x-2'>
+                  <button onClick={e => handleTagClick(e)} data-address='0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                    <span className='pointer-events-none'>Uniswap</span>
+                  </button>
+                  <button onClick={e => handleTagClick(e)} data-address='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                    <span className='pointer-events-none'>Loot</span>
+                  </button>
+                  <button onClick={e => handleTagClick(e)} data-address='0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
+                    <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
+                    <span className='pointer-events-none'>ENS</span>
+                  </button>
                 </div>
-                <span className={`${isLoading ? 'inline-block' : 'hidden'} leading-7 tracking-widest text-2xl text-gray-400 ml-4 mt-2`}>...</span>
-              </label>
-            </div>
+              </div>
+            )}
             {errors.address && (
-            <div className='mt-2'>
-              <p className='text-sm text-red-600'>{errors.address}</p>
-            </div>)}
-            <button onClick={getContract} className="mt-4 cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 rounded-lg font-medium text-white">Find</button>
+              <div className='mt-2'>
+                <p className='text-sm text-red-600 mt-2'>{errors.address}</p>
+              </div>
+            )}
+            <button onClick={getContract} className="block mt-4 h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 rounded-lg font-medium text-white">Find</button>
           </div>
           {methods && (
           <div className='relative w-full'>
@@ -157,7 +180,7 @@ export default function New() {
                 <li className='pl-2'>Turn it&apos;s <span className='font-karla'>inputs</span> into form fields</li>
                 <li className="pl-2 before:content['-']">Call it when the form submits</li>
               </ol>
-              <p className='font-lora text-gray-500 mb-6 text-xs'>You can&apos;t use methods that <i>return data</i>, so you won&apos;t find them here.</p>
+              <p className='font-lora text-gray-500 mb-6 text-xs'>You can&apos;t use methods that <i>return data</i>, so you won&apos;t find those ones here.</p>
             </div>
             <div className='divide-y border rounded-lg -mx-4 sm:mx-0 mb-4'>
               {methods?.map(method => 
@@ -200,7 +223,7 @@ export default function New() {
           <div className={`${!selectedMethod && 'hidden'} mt-4 w-full bg-white sticky py-4 bottom-0`}>
             <button onClick={handleSubmit} disabled={selectedMethod ? false : true} className={`${!selectedMethod && 'grayscale'} flex items-center font-karla cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white`}>
               <p className='mr-1.5'>Create your form</p>
-              <ArrowRight />
+              <ArrowSmRightIcon className='h-5 w-5' />
             </button>
           </div>
         </div>
