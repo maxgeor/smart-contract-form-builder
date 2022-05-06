@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image';
 import { useRouter } from 'next/router'
 import { useState, useEffect, createRef, useRef } from 'react'
-import { ArrowSmRightIcon, DocumentDuplicateIcon } from '@heroicons/react/solid'
+import { ArrowSmRightIcon, DocumentDuplicateIcon, CheckCircleIcon, CheckIcon } from '@heroicons/react/solid'
 
 import Web3 from 'web3';
 const web3 = new Web3(new Web3.providers.HttpProvider() || 'http://localhost:3000');
@@ -52,6 +52,7 @@ export default function New() {
       const builtContract = new web3.eth.Contract(abi);
 
       setContract(builtContract);
+      setSelectedMethod(null);
       setTimeout(() => {
         setShowingEtherscanLogo(true)
       }, 600);
@@ -146,7 +147,7 @@ export default function New() {
                   </a>
                 </Link>
               </div>
-              <span className={`${isLoading ? 'inline-block' : 'hidden'} leading-7 tracking-widest text-2xl text-gray-400 ml-4 mt-2`}>...</span>
+              {/* <span className={`${isLoading ? 'inline-block' : 'hidden'} leading-7 tracking-widest text-2xl text-gray-400 ml-4 mt-2`}>...</span> */}
             </label>
             {/* {!contract || !isLoading &&  ( */}
             <div className={`${showingTags ? 'opacity-100' : '-translate-y-4 -mt-7 opacity-0 pointer-events-none'} transition duration-300 transform mt-3 mb-6`}>
@@ -196,10 +197,10 @@ export default function New() {
                        name='method' 
                        className='peer hidden self-start h-7' 
                        onChange={(e) => handleCheck(e, method)} id={method.signature} />
-                <span className='absolute top-[1.4375rem] left-4 h-[14px] w-[14px] rounded-full box-border border border-gray-400 peer-checked:border-2 peer-checked:border-white' />
+                <span className='absolute top-[1.4375rem] left-4 h-[14px] w-[14px] rounded-full box-border border border-gray-400 peer-checked:border-2 peer-checked:hidden' />
+                <CheckIcon className='absolute top-5 left-3.5 h-5 w-5 hidden peer-checked:block text-white' />
                 <div className={`ml-[1.875rem] flex flex-col w-full ${method.inputs.length > 0 && 'space-y-2'}`}>
                   <div className='flex space-x-4'>
-                    
                     <div className='flex items-center justify-between w-full'>
                       <h3 className={`font-lora mr-12 md:mr-16 text-lg break-all ${selectedMethod?.signature === method.signature && 'text-white'}`}>{method.name}</h3>
                       <p className={`flex-shrink-0 self-start leading-7 text-xs ${selectedMethod?.signature === method.signature ? 'text-blue-200' : 'text-gray-400'}`}>{method.inputs.length} field{method.inputs.length !== 1 && 's'}</p>
@@ -225,12 +226,12 @@ export default function New() {
               )}
             </div>
           </div>)}
-          <div className={`${!selectedMethod && 'hidden'} mt-4 w-full bg-white sticky py-4 bottom-0`}>
-            <button onClick={handleSubmit} disabled={selectedMethod ? false : true} className={`${!selectedMethod && 'grayscale'} flex items-center font-karla h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white`}>
-              <p className='mr-1.5'>Create your form</p>
-              <ArrowSmRightIcon className='h-5 w-5' />
-            </button>
-          </div>
+        </div>
+        <div className={`${!selectedMethod && 'hidden'} mt-4 w-full bg-white sticky sm:mx-4 px-8 p-4 bottom-0`}>
+          <button onClick={handleSubmit} disabled={selectedMethod ? false : true} className={`${!selectedMethod && 'grayscale'} flex items-center font-karla h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white`}>
+            <p className='mr-1.5'>Create your form</p>
+            <ArrowSmRightIcon className='h-5 w-5' />
+          </button>
         </div>
       </main>
     </div>

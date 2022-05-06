@@ -17,7 +17,6 @@ export default function Edit({ form, fields }) {
   const address = createRef();
   const [contract, setContract] = useState({});
   const [errors, setErrors] = useState({});
-  const [showingWalletModal, setShowingWalletModal] = useState(false);
 
   const [focusedField, setFocusedField] = useState(null);
 
@@ -57,7 +56,7 @@ export default function Edit({ form, fields }) {
       <main className='font-lora flex flex-col items-center mx-auto mb-64'>
         <div className={`background-pattern w-full h-52`}></div>
         <section className={`-mt-32  mb-8 bg-white p-8 pt-10 sm:rounded-xl shadow max-w-lg mx-auto w-full`}>
-          <textarea rows='1' autoFocus onFocus={e => e.target.select()} value={form.method} type="text" placeholder="Add a Title..." className={`mb-[11px] focus:mb-[10px] pb-1 border-b focus:border-b-2 border-transparent hover:border-gray-300 focus:border-blue-500 w-full placeholder:text-gray-800 focus:placeholder:text-gray-400  font-lora text-4xl font-medium text-center transition duration-200 focus:outline-none`} />
+          <textarea rows='1' autoFocus onFocus={e => e.target.select()} type="text" placeholder="Add a Title..." className={`mb-[11px] focus:mb-[10px] pb-1 border-b focus:border-b-2 border-transparent hover:border-gray-300 focus:border-blue-500 w-full placeholder:text-gray-800 focus:placeholder:text-gray-400  font-lora text-4xl font-medium text-center transition duration-200 focus:outline-none`} />
           <textarea rows="1" onFocus={e => e.target.select()} placeholder="Add a description..." className='mb-[23px] focus:mb-[22px] pb-1 border-b focus:border-b-2 border-transparent hover:border-gray-300 focus:border-blue-500 w-full text-gray-500 placeholder:text-gray-500 focus:placeholder:text-gray-400 font-lora text-center transition duration-200 focus:outline-none'/>
           <div className='flex flex-col border rounded-lg'>
             <div className='flex p-4 flex-wrap'>
@@ -124,7 +123,7 @@ export default function Edit({ form, fields }) {
               </div>
             </div>
           </div> */}
-          <ConnectWalletField showingWalletModal={showingWalletModal} setShowingWalletModal={setShowingWalletModal}/>
+          <ConnectWalletField />
           <div className='mx-0'>
             <div className='relative p-8 max-w-lg mx-auto sm:rounded-lg ring-1 ring-blue-100 bg-blue-50/80'>
               <p className='font-lora text-gray-500 mb-4'><i>Anyone</i> can make a form for this contract — make sure you trust it.</p>
@@ -138,9 +137,9 @@ export default function Edit({ form, fields }) {
             </div>
           </div>
           <div className='ml-8 max-w-lg mx-auto pt-8'>
-            <button className="flex items-center font-karla cursor-default h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white">
-              <p className='mr-1.5'>Submit</p>
-              <ArrowSmRightIcon />
+            <button className="flex items-center font-karla h-min tracking-tight bg-blue-500 transition duration-200 hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 hover:text-blue-50 py-2 px-4 pr-3 rounded-lg font-medium text-white">
+              <span className='mr-1.5'>Submit</span>
+              <ArrowSmRightIcon className='h-5 w-5' />
             </button>
           </div>
         </div>

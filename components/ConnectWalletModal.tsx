@@ -1,5 +1,7 @@
-import React from 'react'
+import { Dialog as Modal, Transition } from '@headlessui/react'
+import React, { Fragment, useState } from 'react'
 import Image from 'next/image'
+
 
 export default function ConnectWalletModal({
   classes,
@@ -7,6 +9,7 @@ export default function ConnectWalletModal({
   connectWithWalletConnect,
   connectWithCoinbaseWallet,
 }) {
+  
   return (
     <div className={classes}>
       <button onClick={() => connectWithMetamask()} className='flex items-center space-x-4 hover:bg-blue-500 hover:text-white px-6 py-4 w-full'>
