@@ -19,6 +19,9 @@ module.exports = {
         lora: ['Lora', 'serif'],
         work: ['Work Sans', 'sans'],
       },
+      boxShadow: {
+        't': '0 -1px 3px 0 rgb(0 0 0 / 0.035), 0 -1px 2px -1px rgb(0 0 0 / 0.035)'
+      }
     },
   },
   plugins: [],

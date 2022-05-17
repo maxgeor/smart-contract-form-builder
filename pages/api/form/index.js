@@ -1,16 +1,18 @@
-import prisma from '../../lib/prisma';
+import prisma from '../../../lib/prisma';
 
 export default async function handle(req, res) {
   try {
     const { 
+      abi,
       address, 
       contractName, 
-      method,
-      inputs, 
+      inputs,
+      method, 
     } = req.body;
 
     const result = await prisma.form.create({
       data: {
+        abi,
         address,
         contractName,
         method,

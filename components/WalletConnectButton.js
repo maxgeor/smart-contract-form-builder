@@ -4,10 +4,6 @@ import { CheckCircleIcon } from '@heroicons/react/solid';
 
 export default function WalletConnectButton() {
   const { disconnect } = useDisconnect();
-  const changeAddress = () => {
-    disconnect();
-    openConnectModal();
-  }
   
   return (
     <ConnectButton.Custom>
@@ -46,7 +42,7 @@ export default function WalletConnectButton() {
                     <div className='flex items-center flex-wrap'>
                       <p className='font-medium font-karla mr-4'>
                         Connected to 
-                        <span className='font-bold ml-1'>
+                        <span className='font-extrabold ml-1'>
                           {account.displayName}
                         </span>
                       </p>

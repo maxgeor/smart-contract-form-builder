@@ -7,7 +7,6 @@ import {
   RainbowKitProvider,
 } from '../lib/rainbowKit';
 
-
 function App({ Component, pageProps }) {
   return (
     <WagmiProvider client={wagmiClient}>
