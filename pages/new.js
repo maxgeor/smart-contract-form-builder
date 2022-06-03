@@ -19,7 +19,7 @@ export default function New() {
   const [pickedMethod, setPickedMethod] = useState(null);
   const [methods, setMethods] = useState(null);
   const [errors, setErrors] = useState({});
-  const [showingTags, setShowingTags] = useState(true);
+  // const [showingTags, setShowingTags] = useState(true);
   const [showingEtherscanLogo, setShowingEtherscanLogo] = useState(false);
 
   const { data, isSuccess } = useAccount()
@@ -39,8 +39,6 @@ export default function New() {
     if (!isAddress(contractAddress)) return setErrors({ 
       address: "Hmm, that doesn't look like an address. Try copy & pasting it again." 
     });
-
-    setShowingTags(false);
 
     try {
       const contractData = await getContractFromEtherscan(contractAddress);
@@ -125,11 +123,11 @@ export default function New() {
                 autoFocus
                 placeholder='0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7'
                 className={`${!contract ? 'rounded-lg' : 'rounded-t-lg text-gray-400'} transition duration-200 hover:text-gray-500 focus:text-gray-800 border ${errors.address && 'border-red-400'} border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 truncate py-2 px-4 md:pr-8  w-full`} 
-                onFocus={() => setShowingTags(true)}
-                onBlur={() => {
-                  console.log(contract);
-                  if (contract === {}) setShowingTags(false)
-                }}
+                // onFocus={() => setShowingTags(true)}
+                // onBlur={() => {
+                //   console.log(contract);
+                //   if (contract === {}) setShowingTags(false)
+                // }}
               />
               <div className={`${!contract ? '-mt-[3.75rem] opacity-0 pointer-events-none' : ' flex'} transition duration-300 h-[3.75rem] box-border items-center space-x-1.5 font-lora border border-t-0 border-gray-200 rounded-b-lg p-4 w-full mr-10`}>
                 <h3 className='font-lora text-lg break-words'>{contract?.ContractName}</h3>
@@ -140,7 +138,7 @@ export default function New() {
                 </Link>
               </div>
             </label>
-            <div className={`${showingTags ? 'opacity-100' : '-translate-y-4 -mt-8 opacity-0 pointer-events-none'} transition duration-300 transform mt-3 mb-6`}>
+            <div className={`opacity-100 transition duration-300 transform mt-3 mb-6`}>
               <div className='flex space-x-2 z-0 '>
                 <button onClick={e => handleTagClick(e)} data-address='0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984' className='transition duration-200 flex items-center space-x-1 text-xs text-gray-500 bg-gray-100 hover:bg-gray-200 rounded-full py-1.5 px-3'>
                   <DocumentDuplicateIcon className='pointer-events-none h-3 w-3 text-gray-400' />
