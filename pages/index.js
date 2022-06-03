@@ -8,7 +8,7 @@ import { ChevronDownIcon } from '@heroicons/react/solid'
 import WalletConnectButton from '../components/WalletConnectButton'
 import LogInWalletConnectButton from '../components/LogInWalletConnectButton'
 
-import { getUser, createUser } from '../lib/firebase'
+import { findUser, createUser } from '../lib/db'
 import { useEffect } from 'react'
 import Router from 'next/router'
 
@@ -18,7 +18,7 @@ export default function Home() {
 
   const handleLogin = () => {
     if (address) {
-      const user = getUser(address);
+      const user = findUser(address);
       if (!user) {
         createUser(address)
         Router.push('/new');
@@ -33,22 +33,22 @@ export default function Home() {
     }
   }
 
-  // useEffect(() => {
-  //   if (address) {
-  //     const user = getUser(address);
-  //     if (!user) {
-  //       createUser(address)
-  //       Router.push('/new');
-  //       return;
-  //     }
-  //     if (!user.forms) {
-  //       Router.push('/new');
-  //       return;
-  //     }
-  //     Router.push(`/${address}`);
-  //     return;
-  //   }
-  // }, [isSuccess]);
+  useEffect(() => {
+    if (address) {
+      const user = findUser(address);
+      if (!user) {
+        createUser(address)
+        Router.push('/new');
+        return;
+      }
+      if (!user.forms) {
+        Router.push('/new');
+        return;
+      }
+      Router.push(`/${address}`);
+      return;
+    }
+  }, [isSuccess]);
 
   const loginBtn = () => (
     <button onClick={handleLogin} className={`${address ? 'hidden' : ''} text-base font-medium py-2 px-4 hover:bg-blue-600 rounded-lg`}>
@@ -76,6 +76,11 @@ export default function Home() {
                 isDropdown={true}
                 isWhite={true}
               />
+              {address && (
+                <button onClick={handleLogin} className={`text-base font-medium py-2 px-4 hover:bg-blue-600 rounded-lg`}>
+                  Log in
+                </button>
+              )}
             </div>
           </header>
           <main className='max-w-3xl mx-auto'>

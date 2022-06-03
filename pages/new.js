@@ -3,14 +3,14 @@ import Link from 'next/link'
 import Image from 'next/image';
 import getContractFromEtherscan from '../lib/etherscan';
 import { useRouter } from 'next/router'
+import { findUser, createForm } from '../lib/db'
+
 import { isAddress } from 'ethers/lib/utils';
 import { useState, createRef } from 'react'
 import { ArrowSmRightIcon, DocumentDuplicateIcon, CheckIcon } from '@heroicons/react/solid'
 import LogInWalletConnectButton from '../components/LogInWalletConnectButton';
 import { useAccount } from 'wagmi';
 import { useEffect } from 'react';
-
-import { findUser, createForm } from '../lib/firebase'
 
 export default function New() {
   const addressField = createRef();
@@ -69,7 +69,7 @@ export default function New() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createForm(
+      const form = await createForm(
         address, 
         contract.ABI,
         addressField.current.value,
@@ -78,7 +78,7 @@ export default function New() {
         pickedMethod.inputs
       );
 
-      // console.log(form);
+      Router.push(`/edit/${form.id}`);
     } catch (error) {
       console.error(error);
     }
